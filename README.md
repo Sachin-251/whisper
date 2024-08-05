@@ -35,7 +35,7 @@ Whisper is a real-time messaging application built with modern web technologies,
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/whisper.git
+   git clone https://github.com/sachin-251/whisper.git
    cd whisper
    ```
 
