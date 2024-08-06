@@ -2,7 +2,7 @@
 
 Whisper is a real-time messaging application built with modern web technologies, designed to provide a seamless and responsive user experience. The application features real-time messaging, notifications, authentication, and a sleek user interface.
 
-![Screenshot](https://github.com/Sachin-251/whisper/tree/main/public/images/whisper.png?raw=true)
+![Screenshot](https://github.com/Sachin-251/whisper/blob/main/public/images/whisper.png?raw=true)
 
 ## Tech Stack
 
