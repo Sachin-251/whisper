@@ -2,6 +2,7 @@
 import useOtherUser from '@/app/hooks/useOtherUser';
 import { FullConversationType } from '@/app/types';
 import Avatar from '@/components/Avatar';
+import AvatarGroup from '@/components/AvatarGroup';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { useSession } from 'next-auth/react';
@@ -64,8 +65,12 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({data, selected}) => {
         `w-full relative flex items-center space-x-3 p-3 hover:bg-secondary-bg/40 rounded-lg transition cursor-pointer`,
         selected ? 'bg-secondary-bg/40' : 'bg-primary-bg'
     )}>
-        <Avatar user={otherUser} />
-
+        {data?.isGroup ? (
+            <AvatarGroup users={data.users} />
+        ) : (
+            <Avatar user={otherUser} />
+        )}
+        
         <div className='min-w-0 flex-1'>
             <div className='focus:outline-none'>
                 <div className='flex justify-between items-center mb-1'>

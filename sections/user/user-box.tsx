@@ -1,5 +1,6 @@
 "use client";
 import Avatar from '@/components/Avatar';
+import LoadingModal from '@/components/LoadingModal';
 import { User } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -26,6 +27,10 @@ const UserBox: React.FC<UserBoxProps> = ({data}) => {
     },[data, router]);
 
   return (
+    <>
+    {isLoading && (
+        <LoadingModal />
+    )}
     <div onClick={handleClick} className='w-full relative flex items-center space-x-3 bg-primary-bg p-3 hover:bg-secondary-bg/40 rounded-lg transition cursor-pointer'>
         <Avatar user={data} />
         <div className='min-w-0 flex-1'>
@@ -36,6 +41,7 @@ const UserBox: React.FC<UserBoxProps> = ({data}) => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

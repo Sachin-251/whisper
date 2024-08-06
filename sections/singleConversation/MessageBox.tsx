@@ -1,10 +1,13 @@
+"use client"
+;
 import { FullMessageType } from '@/app/types';
 import Avatar from '@/components/Avatar';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import React from 'react'
+import React, { useState } from 'react'
+import ImageModal from './ImageModal';
 
 interface MessageBoxProps{
   isLast?: boolean;
@@ -13,6 +16,7 @@ interface MessageBoxProps{
 
 const MessageBox: React.FC<MessageBoxProps> = ({isLast, data}) => {
   const session = useSession();
+  const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const isOwn = session?.data?.user?.email === data?.sender?.email;
   const seenList = (data?.seen || []).filter((user) => user.email !== data?.sender?.email).map((user) => user.name).join(', ');
@@ -32,7 +36,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({isLast, data}) => {
   const message = clsx(
     "text-sm w-fit overflow-hidden",
     isOwn ? "bg-primary-btn rounded-l-lg rounded-b-lg" : "rounded-r-lg rounded-b-lg bg-secondary-bg",
-    data?.image ? "p-0" : "py-2 px-3"
+    data?.image ? "p-1" : "py-2 px-3"
   );
 
   return (
@@ -53,8 +57,13 @@ const MessageBox: React.FC<MessageBoxProps> = ({isLast, data}) => {
         </div>
 
         <div className={message}>
+          <ImageModal
+            src={data.image}
+            isOpen={imageModalOpen}
+            onClose={() => setImageModalOpen(false)}
+          />
           {data?.image ? (
-            <Image alt='img' width={288} height={288} src={data?.image} className='object-cover cursor-pointer hover:scale-105 transition translate' />
+            <Image onClick={() => setImageModalOpen(true)} alt='img' width={288} height={288} src={data?.image} className='object-cover cursor-pointer hover:scale-105 transition translate' />
           ) : (
             <div>{data?.body}</div>
           )}

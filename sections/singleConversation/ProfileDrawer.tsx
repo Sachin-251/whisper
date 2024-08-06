@@ -3,9 +3,12 @@ import useOtherUser from '@/app/hooks/useOtherUser';
 import { Conversation, User } from '@prisma/client';
 import { format } from 'date-fns';
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 import { IoClose, IoTrash } from "react-icons/io5";
 import Avatar from '@/components/Avatar';
+import ConfirmModal from './ConfirmModal';
+import AvatarGroup from '@/components/AvatarGroup';
+import useActiveList from '@/app/hooks/useActiveList';
 
 
 interface ProfileDrawerProps{
@@ -18,6 +21,9 @@ interface ProfileDrawerProps{
 
 const ProfileDrawer: React.FC<ProfileDrawerProps> = ({data, isOpen, onClose}) => {
   const otherUser = useOtherUser(data);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser?.createdAt), 'PP');
@@ -32,10 +38,15 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({data, isOpen, onClose}) =>
       return `${data.users.length} members`;
     }
 
-    return 'Active';
-  }, [data]);
+    return isActive ? 'Online' : 'Offline';
+  }, [data, isActive]);
 
   return (
+    <>
+    <ConfirmModal
+        isOpen={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+    />
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as='div' className="relative z-50" onClose={onClose}>
         <Transition.Child
@@ -150,8 +161,10 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({data, isOpen, onClose}) =>
                         ">
                           <div className="mb-2">
                             {data.isGroup ? (
-                              // <AvatarGroup users={data.users} />
+                              <>
+                              <AvatarGroup users={data.users} />
                               <p>Group</p>
+                              </>
                             ) : (
                               <Avatar user={otherUser} />
                             )}
@@ -166,7 +179,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({data, isOpen, onClose}) =>
                           </div>
                           <div className="flex gap-10 my-8">
                             <div
-                              onClick={() => {}}
+                              onClick={() => setConfirmOpen(true)}
                               className="
                                 flex
                                 flex-col
@@ -310,6 +323,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({data, isOpen, onClose}) =>
           </div>
       </Dialog>
     </Transition.Root>
+    </>
   )
 }
 
