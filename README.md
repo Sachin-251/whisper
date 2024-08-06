@@ -2,6 +2,8 @@
 
 Whisper is a real-time messaging application built with modern web technologies, designed to provide a seamless and responsive user experience. The application features real-time messaging, notifications, authentication, and a sleek user interface.
 
+![Screenshot](https://github.com/Sachin-251/whisper/tree/main/public/images/whisper.png)
+
 ## Tech Stack
 
 - **Next.js**
@@ -47,18 +49,16 @@ Whisper is a real-time messaging application built with modern web technologies,
 3. **Set up environment variables**:
    Create a `.env.local` file in the root directory and add the necessary environment variables:
    ```env
-   NEXTAUTH_URL=http://localhost:3000
    NEXTAUTH_SECRET=your_nextauth_secret
    GOOGLE_CLIENT_ID=your_google_client_id
    GOOGLE_CLIENT_SECRET=your_google_client_secret
-   GITHUB_CLIENT_ID=your_github_client_id
-   GITHUB_CLIENT_SECRET=your_github_client_secret
+   GITHUB_ID=your_github_client_id
+   GITHUB_SECRET=your_github_client_secret
    DATABASE_URL=your_mongodb_connection_string
    PUSHER_APP_ID=your_pusher_app_id
-   PUSHER_KEY=your_pusher_key
+   NEXT_PUBLIC_PUSHER_APP_KEY=your_pusher_key
    PUSHER_SECRET=your_pusher_secret
-   PUSHER_CLUSTER=your_pusher_cluster
-   CLOUDINARY_URL=your_cloudinary_url
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_url
    ```
 
 4. **Run the development server**:
